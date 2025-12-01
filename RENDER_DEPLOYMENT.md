@@ -25,6 +25,16 @@ pip install -r requirements.txt
 
 **Start Command:**
 ```bash
+cd Pontus-Execution-Layer && ./start.sh
+```
+
+**OR (if start.sh doesn't work):**
+```bash
+cd Pontus-Execution-Layer && python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+**OR (simplest - if Root Directory is set):**
+```bash
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
