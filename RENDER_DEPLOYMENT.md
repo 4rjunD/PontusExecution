@@ -14,6 +14,24 @@
 
 ### Build & Start Commands
 
+**Option 1: Using Root Directory (Recommended)**
+
+**Root Directory:** `Pontus-Execution-Layer`
+
+**Build Command:**
+```bash
+pip install -r requirements.txt
+```
+
+**Start Command:**
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+**Option 2: Without Root Directory**
+
+**Root Directory:** (leave empty)
+
 **Build Command:**
 ```bash
 cd Pontus-Execution-Layer && pip install -r requirements.txt
@@ -23,10 +41,6 @@ cd Pontus-Execution-Layer && pip install -r requirements.txt
 ```bash
 cd Pontus-Execution-Layer && uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
-
-**Alternative (if Root Directory is set to `Pontus-Execution-Layer`):**
-- Build: `pip install -r requirements.txt`
-- Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
 > **Note:** Render automatically sets the `$PORT` environment variable. Do not hardcode a port number.
 
