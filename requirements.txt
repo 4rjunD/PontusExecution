@@ -1,0 +1,6 @@
+# Root requirements.txt - points to Pontus-Execution-Layer
+# This file exists to help Render find dependencies
+# The actual requirements are in Pontus-Execution-Layer/requirements.txt
+
+-r Pontus-Execution-Layer/requirements.txt
+
