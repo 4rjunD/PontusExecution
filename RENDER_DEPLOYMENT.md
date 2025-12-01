@@ -36,6 +36,20 @@ cd Pontus-Execution-Layer && uvicorn app.main:app --host 0.0.0.0 --port $PORT
 - **Starter:** 512 MB RAM, 0.5 CPU (minimum for production)
 - **Standard:** 2 GB RAM, 1 CPU (recommended for production workloads)
 
+### Python Version
+
+**IMPORTANT:** In Render dashboard, manually set Python version to **3.12** (not 3.13).
+
+Render may not automatically read `runtime.txt`, so you need to:
+1. Go to your service settings
+2. Find "Python Version" or "Environment" section
+3. Select **Python 3.12** (or specify `3.12.7`)
+
+Alternatively, add this environment variable:
+```
+PYTHON_VERSION=3.12.7
+```
+
 ### Environment Variables
 
 Add these environment variables in Render's dashboard:
