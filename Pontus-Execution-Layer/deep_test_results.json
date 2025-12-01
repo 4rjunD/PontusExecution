@@ -1,0 +1,72 @@
+{
+  "FX": {
+    "frankfurter": {
+      "status": "\u2705 WORKING",
+      "rates": 3
+    },
+    "ecb": {
+      "status": "\u2705 WORKING",
+      "rates": 0
+    },
+    "exchangerate": {
+      "status": "\u274c FAILED",
+      "error": "name 'EXCHANGERATE_KEY' is not defined"
+    }
+  },
+  "Gas": {
+    "etherscan_ethereum": {
+      "status": "\u2705 WORKING",
+      "fast": "0.825994904",
+      "standard": null,
+      "safe": "0.736994904"
+    },
+    "etherscan_polygon": {
+      "status": "\u2705 WORKING",
+      "fast": "325.84",
+      "standard": null,
+      "safe": "323.84"
+    }
+  },
+  "Crypto": {
+    "coingecko": {
+      "status": "\u2705 WORKING",
+      "coins": 3,
+      "rate_limited": true
+    },
+    "binance": {
+      "status": "\u2705 WORKING",
+      "price": "91192.46000000"
+    }
+  },
+  "Bridge": {
+    "lifi": {
+      "status": "\u2705 WORKING",
+      "has_route": true,
+      "execution_time": 0
+    },
+    "socket": {
+      "status": "\u274c FAILED",
+      "error": "name 'SOCKET_API_KEY' is not defined"
+    }
+  },
+  "Liquidity": {
+    "zerox": {
+      "status": "\u274c FAILED",
+      "error": "404_no_route"
+    },
+    "uniswap_subgraph": {
+      "status": "\u274c FAILED",
+      "error": 301
+    }
+  },
+  "BankRail": {
+    "hardcoded": {
+      "status": "\u2705 WORKING",
+      "pairs": 8
+    },
+    "wise": {
+      "status": "\u274c FAILED",
+      "error": 401
+    }
+  }
+}

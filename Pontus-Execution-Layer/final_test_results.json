@@ -1,0 +1,139 @@
+{
+  "timestamp": "2025-11-20T10:29:32.064424",
+  "summary": {
+    "total": 14,
+    "passed": 12,
+    "failed": 2,
+    "success_rate": 85.71428571428571
+  },
+  "critical_tests": {
+    "passed": 10,
+    "total": 10
+  },
+  "results": {
+    "Frankfurter API": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "3 rates",
+      "data": {
+        "EUR": 0.86851,
+        "GBP": 0.76559
+      }
+    },
+    "ExchangeRate API": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "Rate: 0.8658",
+      "data": {
+        "rate": 0.8658
+      }
+    },
+    "Ethereum Gas": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "Fast: 0.799485139, Safe: 0.724804672",
+      "data": {
+        "fast": "0.799485139",
+        "safe": "0.724804672"
+      }
+    },
+    "Polygon Gas": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "202.30 Gwei",
+      "data": {
+        "gwei": 202.302639886
+      }
+    },
+    "CoinGecko API": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "BTC: $90546, ETH: $2983.94",
+      "data": {
+        "btc": 90546,
+        "eth": 2983.94
+      }
+    },
+    "LI.FI API": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "Bridge quote received",
+      "data": {
+        "has_estimate": true
+      }
+    },
+    "Bank Rail (Hard-coded)": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "3 pairs available",
+      "data": {
+        "pairs": [
+          [
+            "USD",
+            "EUR"
+          ],
+          [
+            "USD",
+            "GBP"
+          ],
+          [
+            "USD",
+            "CAD"
+          ]
+        ]
+      }
+    },
+    "FX Client Integration": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "24 segments",
+      "data": {
+        "count": 24
+      }
+    },
+    "Gas Client Integration": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "2 segments",
+      "data": {
+        "count": 2
+      }
+    },
+    "Crypto Client Integration": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "7 segments",
+      "data": {
+        "count": 7
+      }
+    },
+    "Bridge Client Integration": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "3 segments",
+      "data": {
+        "count": 3
+      }
+    },
+    "Bank Rail Client Integration": {
+      "status": "\u2705 PASS",
+      "passed": true,
+      "details": "8 segments",
+      "data": {
+        "count": 8
+      }
+    },
+    "FastAPI Health": {
+      "status": "\u274c FAIL",
+      "passed": false,
+      "details": "Server not running (skip if not started)",
+      "data": null
+    },
+    "FastAPI Routes": {
+      "status": "\u274c FAIL",
+      "passed": false,
+      "details": "Server not running (skip if not started)",
+      "data": null
+    }
+  }
+}

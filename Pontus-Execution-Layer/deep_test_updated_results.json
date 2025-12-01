@@ -1,0 +1,39 @@
+{
+  "exchangerate": {
+    "status": "\u2705 WORKING",
+    "rate": 0.8658
+  },
+  "gas_ethereum": {
+    "status": "\u2705 WORKING",
+    "fast": "0.980695957",
+    "safe": "0.891695957"
+  },
+  "gas_polygon": {
+    "status": "\u2705 WORKING",
+    "fast": "314.73",
+    "safe": "300.95"
+  },
+  "gas_bsc": {
+    "status": "\u274c FAILED",
+    "error": "NOTOK"
+  },
+  "gas_arbitrum": {
+    "status": "\u274c FAILED",
+    "error": "NOTOK"
+  },
+  "gas_optimism": {
+    "status": "\u274c FAILED",
+    "error": "NOTOK"
+  },
+  "gas_avalanche": {
+    "status": "\u274c FAILED",
+    "error": "NOTOK"
+  },
+  "zerox": {
+    "status": "\u274c FAILED",
+    "error": "404_no_route"
+  },
+  "lifi": {
+    "status": "\u2705 WORKING"
+  }
+}

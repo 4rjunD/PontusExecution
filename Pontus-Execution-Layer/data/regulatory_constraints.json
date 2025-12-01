@@ -1,0 +1,35 @@
+{
+  "restricted_pairs": [
+    {
+      "from": "USD",
+      "to": "CNY",
+      "reason": "capital_controls"
+    },
+    {
+      "from": "USD",
+      "to": "RUB",
+      "reason": "sanctions"
+    }
+  ],
+  "max_amounts": {
+    "USD": 10000,
+    "EUR": 10000,
+    "GBP": 10000
+  },
+  "required_kyc": [
+    "USD",
+    "EUR",
+    "GBP"
+  ],
+  "blocked_countries": [
+    "KP",
+    "IR",
+    "SY"
+  ],
+  "network_restrictions": {
+    "tornado_cash": {
+      "blocked": true
+    }
+  }
+}
+
