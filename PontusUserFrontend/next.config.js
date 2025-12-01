@@ -1,13 +1,20 @@
 /** @type {import('next').NextConfig} */
+const path = require('path')
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: [],
     unoptimized: false,
   },
-  // Turbopack is enabled by default in Next.js 16
-  // Path aliases are handled by tsconfig.json
-  turbopack: {},
+  // Use webpack instead of Turbopack for better path alias support
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname),
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
