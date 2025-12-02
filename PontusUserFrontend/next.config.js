@@ -12,26 +12,37 @@ const nextConfig = {
   },
   // Use webpack instead of Turbopack for better path alias support
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Get existing aliases (Next.js might have some)
-    const existingAliases = config.resolve?.alias || {}
+    // Initialize resolve if it doesn't exist
+    if (!config.resolve) {
+      config.resolve = {}
+    }
     
-    // Override with our aliases - must come AFTER existing ones are read
-    config.resolve = config.resolve || {}
-    config.resolve.alias = {
-      ...existingAliases,
+    // Initialize alias object
+    if (!config.resolve.alias) {
+      config.resolve.alias = {}
+    }
+    
+    // CRITICAL: Set alias as an object with exact match
+    // Webpack needs this format for proper resolution
+    const aliases = {
       '@': projectRoot,
-      '@/lib': path.join(projectRoot, 'lib'),
-      '@/components': path.join(projectRoot, 'components'),
-      '@/app': path.join(projectRoot, 'app'),
     }
     
-    // Ensure proper module resolution
-    if (!config.resolve.modules) {
-      config.resolve.modules = []
+    // Merge with existing aliases, but ensure ours take precedence
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      ...aliases,
     }
-    if (!config.resolve.modules.includes(path.join(projectRoot, 'node_modules'))) {
-      config.resolve.modules.unshift(path.join(projectRoot, 'node_modules'))
-    }
+    
+    // Also ensure symlinks are resolved
+    config.resolve.symlinks = false
+    
+    // Set modules resolution
+    config.resolve.modules = [
+      path.join(projectRoot, 'node_modules'),
+      ...(config.resolve.modules || []).filter(m => !m.includes('node_modules')),
+      'node_modules',
+    ]
     
     return config
   },
