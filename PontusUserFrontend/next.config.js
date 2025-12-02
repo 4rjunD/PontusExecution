@@ -10,41 +10,32 @@ const nextConfig = {
     domains: [],
     unoptimized: false,
   },
-  webpack: (config, { isServer }) => {
-    // Set up path aliases
+  webpack: (config) => {
+    // Set up resolve with alias
     config.resolve = config.resolve || {}
-    
-    // Set the @ alias - this is the key
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': projectRoot,
     }
     
-    // Ensure extensions are configured for TypeScript/JavaScript
+    // Ensure extensions
     config.resolve.extensions = [
       '.tsx',
       '.ts',
       '.jsx',
       '.js',
       '.json',
-      ...(config.resolve.extensions || []).filter(ext => 
-        !['.tsx', '.ts', '.jsx', '.js', '.json'].includes(ext)
-      ),
+      ...(config.resolve.extensions || []),
     ]
     
-    // Use a webpack plugin to resolve @ paths
-    const webpack = require('webpack')
-    
-    config.plugins = config.plugins || []
-    config.plugins.push(
-      new webpack.NormalModuleReplacementPlugin(/^@\/(.*)$/, (resource) => {
-        const match = resource.request.match(/^@\/(.*)$/)
-        if (match) {
-          // Just replace @ with project root - webpack will handle extensions
-          resource.request = path.resolve(projectRoot, match[1])
-        }
-      })
-    )
+    // Ensure modules includes project node_modules
+    config.resolve.modules = [
+      path.join(projectRoot, 'node_modules'),
+      ...(config.resolve.modules || []).filter(m => 
+        typeof m === 'string' && !m.includes('node_modules')
+      ),
+      'node_modules',
+    ]
     
     return config
   },
