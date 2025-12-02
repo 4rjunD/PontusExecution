@@ -9,16 +9,22 @@ const nextConfig = {
   },
   // Use webpack instead of Turbopack for better path alias support
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Resolve path aliases
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': path.resolve(__dirname),
+    // Get the absolute path to the project root
+    const projectRoot = path.resolve(__dirname)
+    
+    // Resolve path aliases - ensure @ points to project root
+    if (!config.resolve.alias) {
+      config.resolve.alias = {}
     }
+    config.resolve.alias['@'] = projectRoot
     
     // Ensure proper module resolution
+    if (!config.resolve.modules) {
+      config.resolve.modules = []
+    }
     config.resolve.modules = [
-      path.resolve(__dirname, 'node_modules'),
-      'node_modules',
+      path.resolve(projectRoot, 'node_modules'),
+      ...config.resolve.modules,
     ]
     
     return config

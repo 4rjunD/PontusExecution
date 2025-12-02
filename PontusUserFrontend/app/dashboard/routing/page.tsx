@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Route, Zap, Play, Pause, Square, RefreshCw, Compare, FileText, Clock } from "lucide-react"
+import { Route, Zap, Play, Pause, Square, RefreshCw, GitCompare, FileText, Clock } from "lucide-react"
 import { optimizeRoute, executeRoute, getRouteSegments } from "@/lib/api"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
