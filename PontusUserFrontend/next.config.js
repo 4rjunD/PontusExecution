@@ -10,39 +10,34 @@ const nextConfig = {
     domains: [],
     unoptimized: false,
   },
-  // Use webpack instead of Turbopack for better path alias support
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Initialize resolve if it doesn't exist
-    if (!config.resolve) {
-      config.resolve = {}
-    }
-    
-    // Initialize alias object
-    if (!config.resolve.alias) {
-      config.resolve.alias = {}
-    }
-    
-    // CRITICAL: Set alias as an object with exact match
-    // Webpack needs this format for proper resolution
-    const aliases = {
+  // Use webpack instead of Turbopack
+  webpack: (config, { isServer }) => {
+    // CRITICAL: Set alias BEFORE any other resolution
+    config.resolve = config.resolve || {}
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
       '@': projectRoot,
     }
     
-    // Merge with existing aliases, but ensure ours take precedence
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      ...aliases,
-    }
-    
-    // Also ensure symlinks are resolved
-    config.resolve.symlinks = false
-    
-    // Set modules resolution
+    // Ensure proper module resolution order
     config.resolve.modules = [
-      path.join(projectRoot, 'node_modules'),
-      ...(config.resolve.modules || []).filter(m => !m.includes('node_modules')),
+      path.resolve(projectRoot, 'node_modules'),
+      ...(config.resolve.modules || []).filter(m => 
+        typeof m === 'string' && !m.includes('node_modules')
+      ),
       'node_modules',
     ]
+    
+    // Add extensions if not present
+    if (!config.resolve.extensions) {
+      config.resolve.extensions = []
+    }
+    const extensions = ['.tsx', '.ts', '.jsx', '.js', '.json']
+    extensions.forEach(ext => {
+      if (!config.resolve.extensions.includes(ext)) {
+        config.resolve.extensions.push(ext)
+      }
+    })
     
     return config
   },
