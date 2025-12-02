@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const path = require('path')
 
+// Get absolute path to project root
+const projectRoot = path.resolve(__dirname)
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -9,37 +12,19 @@ const nextConfig = {
   },
   // Use webpack instead of Turbopack for better path alias support
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Get the absolute path to the project root
-    const projectRoot = path.resolve(__dirname)
-    
-    // Debug: Log the project root (will show in build logs)
-    console.log('Webpack config - Project root:', projectRoot)
-    console.log('Webpack config - __dirname:', __dirname)
-    
-    // Resolve path aliases - ensure @ points to project root
+    // Ensure resolve object exists
     config.resolve = config.resolve || {}
     config.resolve.alias = config.resolve.alias || {}
     
-    // Set the @ alias to the project root
+    // Set @ alias to project root - this is critical
     config.resolve.alias['@'] = projectRoot
     
-    // Also try setting it with trailing slash
-    config.resolve.alias['@/'] = path.join(projectRoot, '/')
-    
-    // Ensure proper module resolution
+    // Ensure modules array exists and includes project node_modules first
+    const existingModules = config.resolve.modules || ['node_modules']
     config.resolve.modules = [
-      path.resolve(projectRoot, 'node_modules'),
-      ...(config.resolve.modules || ['node_modules']),
-    ]
-    
-    // Ensure extensions are resolved
-    config.resolve.extensions = [
-      '.tsx',
-      '.ts',
-      '.jsx',
-      '.js',
-      '.json',
-      ...(config.resolve.extensions || []),
+      path.join(projectRoot, 'node_modules'),
+      ...existingModules.filter(m => m !== 'node_modules'),
+      'node_modules',
     ]
     
     return config
