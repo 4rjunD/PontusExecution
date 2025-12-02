@@ -20,7 +20,19 @@ const nextConfig = {
       '@': projectRoot,
     }
     
-    // Use a webpack plugin to resolve @ paths with proper extensions
+    // Ensure extensions are configured for TypeScript/JavaScript
+    config.resolve.extensions = [
+      '.tsx',
+      '.ts',
+      '.jsx',
+      '.js',
+      '.json',
+      ...(config.resolve.extensions || []).filter(ext => 
+        !['.tsx', '.ts', '.jsx', '.js', '.json'].includes(ext)
+      ),
+    ]
+    
+    // Use a webpack plugin to resolve @ paths
     const webpack = require('webpack')
     
     config.plugins = config.plugins || []
@@ -28,31 +40,8 @@ const nextConfig = {
       new webpack.NormalModuleReplacementPlugin(/^@\/(.*)$/, (resource) => {
         const match = resource.request.match(/^@\/(.*)$/)
         if (match) {
-          const filePath = match[1]
-          const resolvedPath = path.resolve(projectRoot, filePath)
-          
-          // Try to resolve with extensions if no extension provided
-          const fs = require('fs')
-          const extensions = ['.ts', '.tsx', '.js', '.jsx', '.json']
-          
-          // If path already has extension, use it directly
-          if (path.extname(filePath)) {
-            resource.request = resolvedPath
-          } else {
-            // Try to find file with extension
-            let found = false
-            for (const ext of extensions) {
-              const fullPath = resolvedPath + ext
-              if (fs.existsSync(fullPath)) {
-                resource.request = fullPath
-                found = true
-                break
-              }
-            }
-            if (!found) {
-              resource.request = resolvedPath
-            }
-          }
+          // Just replace @ with project root - webpack will handle extensions
+          resource.request = path.resolve(projectRoot, match[1])
         }
       })
     )
