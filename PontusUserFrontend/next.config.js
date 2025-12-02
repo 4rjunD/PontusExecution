@@ -10,34 +10,29 @@ const nextConfig = {
     domains: [],
     unoptimized: false,
   },
-  // Use webpack instead of Turbopack
   webpack: (config, { isServer }) => {
-    // CRITICAL: Set alias BEFORE any other resolution
+    // Set up path aliases
     config.resolve = config.resolve || {}
+    
+    // Set the @ alias - this is the key
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': projectRoot,
     }
     
-    // Ensure proper module resolution order
-    config.resolve.modules = [
-      path.resolve(projectRoot, 'node_modules'),
-      ...(config.resolve.modules || []).filter(m => 
-        typeof m === 'string' && !m.includes('node_modules')
-      ),
-      'node_modules',
-    ]
+    // Use a webpack plugin to debug/resolve paths
+    const webpack = require('webpack')
     
-    // Add extensions if not present
-    if (!config.resolve.extensions) {
-      config.resolve.extensions = []
-    }
-    const extensions = ['.tsx', '.ts', '.jsx', '.js', '.json']
-    extensions.forEach(ext => {
-      if (!config.resolve.extensions.includes(ext)) {
-        config.resolve.extensions.push(ext)
-      }
-    })
+    // Add a plugin to log unresolved modules (for debugging)
+    config.plugins = config.plugins || []
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(/^@\/(.*)$/, (resource) => {
+        const match = resource.request.match(/^@\/(.*)$/)
+        if (match) {
+          resource.request = path.resolve(projectRoot, match[1])
+        }
+      })
+    )
     
     return config
   },
