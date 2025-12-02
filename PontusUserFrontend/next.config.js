@@ -10,7 +10,9 @@ const nextConfig = {
     domains: [],
     unoptimized: false,
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    const webpack = require('webpack')
+    
     // Set up resolve with alias
     config.resolve = config.resolve || {}
     config.resolve.alias = {
@@ -28,14 +30,23 @@ const nextConfig = {
       ...(config.resolve.extensions || []),
     ]
     
-    // Ensure modules includes project node_modules
-    config.resolve.modules = [
-      path.join(projectRoot, 'node_modules'),
-      ...(config.resolve.modules || []).filter(m => 
-        typeof m === 'string' && !m.includes('node_modules')
-      ),
-      'node_modules',
-    ]
+    // Use NormalModuleReplacementPlugin to handle @/ imports
+    // This replaces @/lib/utils with the actual file path
+    config.plugins = config.plugins || []
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /^@\//,
+        (resource) => {
+          // Replace @/ with project root path
+          const newPath = resource.context.replace(/@\/$/, '')
+          if (resource.request.startsWith('@/')) {
+            const relativePath = resource.request.replace('@/', '')
+            // Use context-relative resolution
+            resource.request = path.resolve(projectRoot, relativePath)
+          }
+        }
+      )
+    )
     
     return config
   },
